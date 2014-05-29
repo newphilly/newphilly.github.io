@@ -1,0 +1,285 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+
+	<title>Sermon Info Generator</title>
+
+	<meta name="description" content="New Philly Sermon Info, Names, Shortcuts Generator">
+	<meta name="author" content="beekay">
+
+</head>
+<style>
+	#container {
+		padding: 2.5% 2.5% 0;
+		margin: 50px auto;
+		width: 95%;
+		max-width: 600px;
+		min-width: 280px;
+		box-shadow: 0.5px 0.5px 2px 0.4px #999999;
+		border-radius: 2px;
+		background-color: #eee;
+	}
+
+	img {
+		display: block;
+		width: 250px;
+		margin: 20px auto;
+		height: auto;
+	}
+
+	h3{
+		text-align: center;
+		font-weight: bold;
+	}
+
+	#get-bitly {
+		margin-left: 10px;
+	}
+
+	#link_url {
+		width: 180px;
+	}
+
+	button {
+		padding-top: 10px;
+		cursor: pointer;
+	}
+</style>
+
+<body>
+	<div id="container">
+		<img src="logo.png">
+		<h3>Podcast/FB Post Automator v0.1</h3>
+		<span id="date-now"></span><br><br>
+		Speaker(s): 
+		<select id="speaker-select">
+			<option data-val='other'>Other</option>
+			<option data-val='cl'>Christian Lee</option>
+			<option data-val='el'>Erin Lee</option>
+			<option data-val='mac'>Marcus Corpening</option>
+			<option data-val='cal'>Caleb Lee</option>
+			<option data-val='py'>Paul Yoo</option>
+			<option data-val='jy'>Jamie Yoo</option>
+			<option data-val='jmb'>John-Michael Becker</option>
+			<option data-val='sjb'>Sky J Becker</option>
+			<option data-val='da'>David Ahn</option>
+		</select><br><br>
+		<span class="other-speaker">Other Speaker: &nbsp;&nbsp;<input type="text" id="other-speaker"><br><br></span>
+		Initials: <input type="text" id="speaker-initials"><br><br>
+		Event:
+        <select id="event-select">
+            <option data-val='other'>Other</option>
+            <option data-val='Sunday Hillside'>Hillside (Sunday)</option>
+            <option data-val='Sunday Itaewon'>Itaewon (Sunday)</option>
+            <option data-val='Sunday Seaside'>Seaside (Sunday)</option>
+            <option data-val='Sunday Sydney'>Sydney (Sunday)</option>
+            <option data-val='Fri Fire'>Friday Fire (Hillside)</option>
+            <option data-val='Friday Fire Seaside'>Friday Fire (Seaside)</option>
+            <option data-val='jpm'>JPM</option>
+        </select><br><br>
+        <span class="other-event">Other Event: &nbsp;&nbsp;<input type="text" id="other-event"><br><br></span>
+		Sermon Name: <input type="text" id="sermon-name"><br><br>
+		Sermon Duration: <input type="text" id="sermon-time"><br><br>
+		Podcast Title: <span id="podcast-name" val=''></span><br><br>
+		<button id="copy-podcast" data-clipboard-text="" title="Click to copy podcast name">Copy Podcast Name</button><br><br>
+		Facebook Post: <span id="fb-name" val=''></span><br><br>
+		<button id="copy-fb" data-clipboard-text="" title="Click to copy FB post">Copy FB Post</button><br><br>
+		Sermon Link URL<br><input type="text" id="link_url"><button id="get-bitly">Get Bitly URL</button><br><br>
+		Bitly URL: <span id="bitly-url" val=''></span><br><br>
+		<button id="copy-bitly" data-clipboard-text="" title="Click to copy bitly url">Copy Bitly URL</button><br><br>
+	    <p style="text-align:right;">&#169; Brian Kim </p>
+	</div>
+
+</body>
+<script src="jquery.min.js"></script>
+<script src="ZeroClipboard.min.js"></script>
+<script>
+	var client = new ZeroClipboard(document.getElementById("copy-podcast"), {
+		moviePath: "ZeroClipboard.swf"
+	});
+
+	client.on( "load", function(client) {
+	// alert( "movie is loaded" );
+
+		client.on( "complete", function(client, args) {
+	// `this` is the element that was clicked
+			// this.style.display = "none";
+			// alert("Copied text to clipboard: " + args.text );
+		});
+	});
+
+	var client_fb = new ZeroClipboard(document.getElementById("copy-fb"), {
+		moviePath: "ZeroClipboard.swf"
+	});
+
+	client_fb.on( "load", function(client) {
+	// alert( "movie is loaded" );
+
+		client_fb.on( "complete", function(client, args) {
+	// `this` is the element that was clicked
+			// this.style.display = "none";
+			// alert("Copied text to clipboard: " + args.text );
+		});
+	});
+
+	var client_bitly = new ZeroClipboard(document.getElementById("copy-bitly"), {
+		moviePath: "ZeroClipboard.swf"
+	});
+
+	client_bitly.on( "load", function(client) {
+	// alert( "movie is loaded" );
+
+		client_bitly.on( "complete", function(client, args) {
+	// `this` is the element that was clicked
+			// this.style.display = "none";
+			// alert("Copied text to clipboard: " + args.text );
+		});
+	});
+
+	//run after document is loaded
+	$(document).ready(function(){
+
+		//formatting Current Time
+		var today = new Date();
+		var day = today.getDate();
+		var dd = today.getDate();
+		var month = today.getMonth()+1;
+		var mm = today.getMonth()+1; //January is 0!
+		var yyyy = today.getFullYear();
+		var d = today.getDay();
+		var days = ['sun','mon','tue','wed','thu','fri','sat'];
+		dd = (dd<10) ? '0'+dd : dd;
+		mm = (mm<10) ? '0'+mm : mm;
+
+		//setting formats for podcast and fb
+		var today_podcast = yyyy+'.'+mm+'.'+dd+'.'+days[d];
+		var today_fb = month + '/' + day + '/' + yyyy; 
+		
+		//determine if letter is uppercase
+		function isUpperCase(char) {
+			return !!/[A-Z]/.exec(char[0]);
+		};
+		
+		//return initials
+		function ret_init(str){
+			var init = '';
+
+			//loop through all characters
+			for(var i = 0; i<str.length; i++){
+
+				//only return initials
+				if(isUpperCase(str.charAt(i))) {
+					init += str.charAt(i);
+				}
+			}
+
+			return init.toLowerCase();
+		}
+
+		//bitly api to get short url
+		function get_short_url(long_url, login, api_key, func)
+		{
+			$.getJSON(
+				"https://api-ssl.bitly.com/v3/shorten?callback=?", 
+				{ 
+					"format": "json",
+					"access_token": api_key,
+					"login": login,
+					"longUrl": long_url
+				},
+				function(response) {
+					func(response.data.url);
+				}
+			);
+		}
+
+		//name podcast based on parameters
+	    function name_podcast(){
+	        var sermon_title = $("#sermon-name").val();
+	        var initials = $("#speaker-initials").val();
+	        var podcast = today_podcast + " - " + sermon_title + " - " + initials + ".mp3";
+	        // alert(initials);
+	        $("#podcast-name").text(podcast);
+	        $("#copy-podcast").attr("data-clipboard-text",podcast);
+	    }
+
+	    //name fb post based on parameters
+	    function name_fb(){
+	        var sermon_title = $("#sermon-name").val();
+	        var speaker = $("#speaker-select option:selected").val();
+	        if(speaker == "other") {
+	        	speaker = $("#other-speaker").val();
+	        }
+	        var length = $("#sermon-time").val();
+	        var campus_event = $("#event-select option:selected").attr("data-val");
+	        if(campus_event == "other") {
+	        	campus_event = $("#other-event").val();
+	        }
+	        //"Wisdom in Loving" by Christian Lee (Sunday Hillside, 5/25/2014, 1:28:55)
+	        var fb_name = '"' + sermon_title + '" by ' + speaker + "(" + campus_event + ", " + today_fb + ", " + length + ")";
+	        // alert(initials);
+	        $("#fb-name").text(fb_name);
+	        $("#copy-fb").attr("data-clipboard-text",fb_name);
+	    }
+
+		//print current time
+		$("#date-now").text(Date());
+
+		//set initials based on speaker
+		$("#speaker-select").change(function(){
+			$("#speaker-initials").val('');
+			var init = $("#speaker-select option:selected").attr("data-val");
+			if(init != "other") {
+	            $(".other-speaker").hide();
+				$("#speaker-initials").val(init);
+			} else {
+			    $(".other-speaker").show();
+			}
+			name_podcast();
+			name_fb()
+		});
+
+		//update podcast and fb dynamically as content is entered
+		$("#speaker-initials, #other-event, #sermon-name, #sermon-time").on('input',function(){
+			name_podcast();
+			name_fb()
+		});
+		
+		//set event
+		$("#event-select").change(function(){
+	        var event = $("#event-select option:selected").attr("data-val");
+	        if(event != "other") {
+	            $(".other-event").hide();
+	        } else {
+	            $(".other-event").show();
+	        }
+	        name_podcast();
+	        name_fb()
+	    });
+
+		//set initials on change
+		$("#other-speaker").on('input',function(){
+			var name = $(this).val();
+			var init = ret_init(name);
+			$("#speaker-initials").val(init);
+			name_podcast();
+			name_fb()
+		});
+
+		//get bitly on click
+		$("#get-bitly").click(function(){
+			var login = "briamkin";
+			var api_key = "5c1fdd3a0b2d57d7b4c2e91e63507d637ab05d61";
+			var long_url = $("#link_url").val();
+			// long_url = encodeURIComponent(long_url);
+			get_short_url(long_url, login, api_key, function(short_url) {
+			    $("#bitly-url").text(short_url);
+			    $("#copy-bitly").attr("data-clipboard-text",short_url);
+			});
+		});
+
+	});
+
+</script>
+</html>
