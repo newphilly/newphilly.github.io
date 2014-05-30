@@ -102,8 +102,10 @@
 <script src="jquery.min.js"></script>
 <script src="ZeroClipboard.js"></script>
 <script>
-		//Scripts for Clipboard 
-		var client = new ZeroClipboard(document.getElementById("copy-podcast"), {
+
+	//Scripts for Clipboard 
+	function declare_clip(id){
+		var client = new ZeroClipboard(document.getElementById(id), {
 			moviePath: "ZeroClipboard.swf"
 		});
 
@@ -115,42 +117,16 @@
 				// this.style.display = "none";
 				// alert("Copied text to clipboard: " + args.text );
 			});
-		});
+		});	
+	}
 
-		var client_fb = new ZeroClipboard(document.getElementById("copy-fb"), {
-			moviePath: "ZeroClipboard.swf"
-		});
-
-		client_fb.on( "load", function(client) {
-		// alert( "movie is loaded" );
-
-			client_fb.on( "complete", function(client, args) {
-		// `this` is the element that was clicked
-				// this.style.display = "none";
-				// alert("Copied text to clipboard: " + args.text );
-			});
-		});
-
-		var client_bitly = new ZeroClipboard(document.getElementById("copy-bitly"), {
-			moviePath: "ZeroClipboard.swf"
-		});
-
-		client_bitly.on( "load", function(client) {
-		// alert( "movie is loaded" );
-
-			client_bitly.on( "complete", function(client, args) {
-		// `this` is the element that was clicked
-				// this.style.display = "none";
-				// alert("Copied text to clipboard: " + args.text );
-			});
-		});
-
-	//Print current live time
-	// date_time('date_time');
-
+	//Create buttons for each id
+	declare_clip("copy-podcast");
+	declare_clip("copy-fb");
+	declare_clip("copy-bitly");
+	
 	//run after document is loaded
 	$(document).ready(function(){
-	
 
 		//formatting Current Time
 		function live_time(update){
@@ -184,8 +160,10 @@
 			}
 		}
 
+		//Setting initial live time and time stamp values
 		live_time(0);
 
+		//Update time every second
 		setInterval(function(){
 			live_time(1);
 		}, 1000);
