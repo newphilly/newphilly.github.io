@@ -65,7 +65,6 @@
 		display: block;
 		float: left;
 		margin-top:2px;
-		border: 1px solid #009eca;
 	}
 
 	#bitly-url {
@@ -82,13 +81,15 @@
 		border: 1px solid #009eca;
 	}
 
-	button {
+	.btn {
 		cursor: pointer;
 		display: block;
 		float: left;
+		background-color: #009eca;
+		color:#fff;
 		height: 26px;
 		margin-left: 5px;
-		padding: 6px;
+		padding: 5px;
 		width: 50px;
 	}
 
@@ -153,13 +154,13 @@
 			<span class="left">Sermon Duration: </span><input type="text" id="sermon-time"><br><br>
 			<span class="left">Podcast Date: </span><input type="text" id="time-stamp-pod"><br><br>
 			<span class="title"><i>Podcast Title</i></span><br><input class="long" type="text" id="podcast-name">
-			<button id="copy-podcast" data-clipboard-text="" title="Click to copy podcast name">Copy</button><br><br>
+			<div class="btn" id="copy-podcast" data-clipboard-text="" title="Click to copy podcast name">Copy</div><br><br>
 			<span class="left">FB Time Stamp: </span><input type="text" id="time-stamp-fb"><br><br>
 			<span class="title"><i>Facebook Post</i></span><br><input class="long" type="text" id="fb-name">
-			<button id="copy-fb" data-clipboard-text="" title="Click to copy FB post">Copy</button><br><br>
-			<span class="left">Sermon Link: </span><input type="text" id="link_url"><img id="ajax" src="ajax.gif"><button id="get-bitly">Bitly</button><br><br>
+			<div class="btn" id="copy-fb" data-clipboard-text="" title="Click to copy FB post">Copy</div><br><br>
+			<span class="left">Sermon Link: </span><input type="text" id="link_url"><img id="ajax" src="ajax.gif"><div class="btn" id="get-bitly">Bitly</div><br><br>
 			<span class="left bitly">Bitly Link: </span><span class="bitly" id="bitly-url" val=''></span>
-			<button class="bitly" id="copy-bitly" data-clipboard-text="" title="Click to copy bitly url">Copy</button><br><br>
+			<div class="btn bitly" id="copy-bitly" data-clipboard-text="" title="Click to copy bitly url">Copy</div><br><br>
 		</div>
 	    <p style="text-align:right;margin:0;">&#169; Brian Kim </p>
 	</div>
