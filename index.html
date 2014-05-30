@@ -86,8 +86,10 @@
         <span class="other-event">Other Event: &nbsp;&nbsp;<input type="text" id="other-event"><br><br></span>
 		Sermon Name: <input type="text" id="sermon-name"><br><br>
 		Sermon Duration: <input type="text" id="sermon-time"><br><br>
+		Podcast Time Stamp: <input type="text" id="time-stamp-pod"><br><br>
 		Podcast Title: <span id="podcast-name" val=''></span><br><br>
 		<button id="copy-podcast" data-clipboard-text="" title="Click to copy podcast name">Copy Podcast Name</button><br><br>
+		FB Time Stamp: <input type="text" id="time-stamp-fb"><br><br>
 		Facebook Post: <span id="fb-name" val=''></span><br><br>
 		<button id="copy-fb" data-clipboard-text="" title="Click to copy FB post">Copy FB Post</button><br><br>
 		Sermon Link URL<br><input type="text" id="link_url"><button id="get-bitly">Get Bitly URL</button><br><br>
@@ -156,20 +158,11 @@
 	    day1 = date1.getDay();
 	    days1 = new Array('Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday');
 	    h1 = date1.getHours();
-	    if(h1<10)
-	    {
-	            h1 = "0"+h;
-	    }
+	    h1 = (h1<10) ? "0" + h1 : h1;
 	    m1 = date1.getMinutes();
-	    if(m1<10)
-	    {
-	            m1 = "0"+m1;
-	    }
+	    m1 = (m1<10) ? "0" + m1 : m1;
 	    s1 = date1.getSeconds();
-	    if(s1<10)
-	    {
-	            s1 = "0"+s1;
-	    }
+	    s1 = (s1<10) ? "0" + s1 : s1;
 	    result1 = ''+days1[day1]+' '+months1[month1]+' '+d1+' '+year1+' '+h1+':'+m1+':'+s1;
 	    document.getElementById(id).innerHTML = result1;
 	    setTimeout('date_time("'+id+'");','1000');
@@ -177,27 +170,45 @@
 	}
 
 	//Print current live time
-	date_time('date_time');
-	
+	// date_time('date_time');
+
 	//run after document is loaded
 	$(document).ready(function(){
 
 		//formatting Current Time
-		var today = new Date();
-		var day = today.getDate();
-		var dd = today.getDate();
-		var month = today.getMonth()+1;
-		var mm = today.getMonth()+1; //January is 0!
-		var yyyy = today.getFullYear();
-		var d = today.getDay();
-		var days = ['sun','mon','tue','wed','thu','fri','sat'];
-		dd = (dd<10) ? '0'+dd : dd;
-		mm = (mm<10) ? '0'+mm : mm;
+		function live_time(){
+			var today = new Date();
+			var day = today.getDate();
+			var dd = today.getDay();
+			var month = today.getMonth()+1;
+			var mm = today.getMonth()+1; //January is 0!
+			var yyyy = today.getFullYear();
+			var d = today.getDay();
+			var ss = today.getSeconds();
+			var hh = today.getHours();
+			var min = today.getMinutes();
+			var days = ['sun','mon','tue','wed','thu','fri','sat'];
+			var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+			dd = (dd<10) ? '0'+dd : dd;
+			mm = (mm<10) ? '0'+mm : mm;
+			ss = (ss<10) ? '0'+ss : ss;
+			hh = (hh<10) ? '0'+hh : hh;
+			min = (min<10) ? '0'+min : min;
 
-		//setting formats for podcast and fb
-		var today_podcast = yyyy+'.'+mm+'.'+dd+'.'+days[d];
-		var today_fb = month + '/' + day + '/' + yyyy; 
-		
+			var live_time = days[d] + ' ' + months[month] + ' ' + dd + ' ' + yyyy + ' ' + hh + ':' + min + ':' + ss;
+			//setting formats for podcast and fb
+			var today_podcast = yyyy+'.'+mm+'.'+dd+'.'+days[d];
+			var today_fb = month + '/' + day + '/' + yyyy; 
+
+			$("#date_time").text(live_time)
+			$("#time-stamp-pod").text(today_podcast);
+			$("#time-stamp-fb").text(today_fb);
+		}
+
+		setTimeout(function(){
+			live_time();
+		}, 1000);
+
 		//determine if letter is uppercase
 		function isUpperCase(char) {
 			return !!/[A-Z]/.exec(char[0]);
@@ -240,7 +251,8 @@
 	    function name_podcast(){
 	        var sermon_title = $("#sermon-name").val();
 	        var initials = $("#speaker-initials").val();
-	        var podcast = today_podcast + " - " + sermon_title + " - " + initials + ".mp3";
+	        var time_pod = $("#time-stamp-pod").text();
+	        var podcast = time_pod + " - " + sermon_title + " - " + initials + ".mp3";
 	        // alert(initials);
 	        $("#podcast-name").text(podcast);
 	        $("#copy-podcast").attr("data-clipboard-text",podcast);
@@ -258,8 +270,9 @@
 	        if(campus_event == "other") {
 	        	campus_event = $("#other-event").val();
 	        }
+	        var time_fb = $("#time-stamp-fb").text();
 	        //"Wisdom in Loving" by Christian Lee (Sunday Hillside, 5/25/2014, 1:28:55)
-	        var fb_name = '"' + sermon_title + '" by ' + speaker + " (" + campus_event + ", " + today_fb + ", " + length + ")";
+	        var fb_name = '"' + sermon_title + '" by ' + speaker + " (" + campus_event + ", " + time_fb + ", " + length + ")";
 	        // alert(initials);
 	        $("#fb-name").text(fb_name);
 	        $("#copy-fb").attr("data-clipboard-text",fb_name);
@@ -283,7 +296,7 @@
 		});
 
 		//update podcast and fb dynamically as content is entered
-		$("#speaker-initials, #other-event, #sermon-name, #sermon-time").on('input',function(){
+		$("#speaker-initials, #other-event, #sermon-name, #sermon-time, #time-stamp-pod, #time-stamp-fb").on('input',function(){
 			name_podcast();
 			name_fb()
 		});
