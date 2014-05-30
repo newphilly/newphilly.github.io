@@ -15,22 +15,36 @@
 		font-family: 'News Cycle', sans-serif;	
 	}
 
+	body {
+		margin:0;
+		padding:0;
+	}
+
 	#container {
-		padding: 2.5% 2.5% 0;
-		margin: 50px auto;
+		padding: 0 2.5%;
+		margin: 0 auto;
 		width: 95%;
-		max-width: 600px;
-		min-width: 280px;
-		box-shadow: 0.5px 0.5px 2px 0.4px #999999;
+		/*max-width: 600px;*/
+		min-width: 450px;
 		border-radius: 2px;
 		background-color: #eee;
+	}
+
+	#info-container {
+		background-color: #FFFFFF;
+		border-radius: 2px;
+		box-shadow: 0.5px 0.5px 2px 0.4px #999999;
+		margin: 0 auto;
+		padding: 10px;
+		width: 405px;
 	}
 
 	img {
 		display: block;
 		width: 250px;
-		margin: 20px auto;
+		margin: 0 auto;
 		height: auto;
+		padding-top:50px;
 	}
 
 	h3{
@@ -44,8 +58,14 @@
 		float: left;
 	}
 
+	#bitly-url {
+		width: 168px;
+		display: block;
+		float: left;
+	}
+
 	select {
-		width: 160px;
+		width: 168px;
 		display: block;
 		float: left;
 		margin-top:4px;	
@@ -62,7 +82,6 @@
 		width: 50px;
 	}
 
-
 	.left {
 		display:block;
 		width: 150px;
@@ -72,52 +91,67 @@
 		font-weight:bold;
 	}
 
+	.title {
+		display:block;
+		float:left;
+	}
+
+	.long {
+		width:320px;
+	}
+
+	.bitly {
+		display:none;
+	}
+
 </style>
 
 <body>
 	<div id="container">
 		<img src="logo.png">
-		<h3>Podcast/FB Post Automator v0.1</h3>
-		<span class="left">Current Time: </span><span id="date_time"></span><br><br>
-		<span class="left">Speaker(s): </span>
-		<select id="speaker-select">
-			<option data-val='other'>Other</option>
-			<option data-val='cl'>Christian Lee</option>
-			<option data-val='el'>Erin Lee</option>
-			<option data-val='mac'>Marcus Corpening</option>
-			<option data-val='cal'>Caleb Lee</option>
-			<option data-val='py'>Paul Yoo</option>
-			<option data-val='jy'>Jamie Yoo</option>
-			<option data-val='jmb'>John-Michael Becker</option>
-			<option data-val='sjb'>Sky J Becker</option>
-			<option data-val='da'>David Ahn</option>
-		</select><br><br>
-		<span class="other-speaker"><span class="left">Other Speaker: </span><input type="text" id="other-speaker"><br><br></span>
-		<span class="left">Initials: </span><input type="text" id="speaker-initials"><br><br>
-		<span class="left">Event: </span>
-        <select id="event-select">
-            <option data-val='other'>Other</option>
-            <option data-val='Sunday Hillside'>Hillside (Sunday)</option>
-            <option data-val='Sunday Itaewon'>Itaewon (Sunday)</option>
-            <option data-val='Sunday Seaside'>Seaside (Sunday)</option>
-            <option data-val='Sunday Sydney'>Sydney (Sunday)</option>
-            <option data-val='Fri Fire'>Friday Fire (Hillside)</option>
-            <option data-val='Friday Fire Seaside'>Friday Fire (Seaside)</option>
-            <option data-val='JPM'>JPM</option>
-        </select><br><br>
-        <span class="other-event"><span class="left">Other Event: </span><input type="text" id="other-event"><br><br></span>
-		<span class="left">Sermon Name: </span><input type="text" id="sermon-name"><br><br>
-		<span class="left">Sermon Duration: </span><input type="text" id="sermon-time"><br><br>
-		<span class="left">Podcast Time Stamp: </span><input type="text" id="time-stamp-pod"><br><br>
-		<span class="left">Podcast Title: </span><input type="text" id="podcast-name">
-		<button id="copy-podcast" data-clipboard-text="" title="Click to copy podcast name">Copy</button><br><br>
-		<span class="left">FB Time Stamp: </span><input type="text" id="time-stamp-fb"><br><br>
-		<span class="left">Facebook Post: </span><input type="text" id="fb-name">
-		<button id="copy-fb" data-clipboard-text="" title="Click to copy FB post">Copy</button><br><br>
-		<span class="left">Sermon URL: </span><input type="text" id="link_url"><button id="get-bitly">Bitly</button><br><br>
-		Bitly URL: <span id="bitly-url" val=''></span>
-		<button id="copy-bitly" data-clipboard-text="" title="Click to copy bitly url">Copy</button><br><br>
-	    <p style="text-align:right;margin-right: -4%;">&#169; Brian Kim </p>
+		<h3>Podcast/FB Post Automator v0.2</h3>
+		<div id="info-container">
+			<span class="left">Current Time: </span><span id="date_time"></span><br><br>
+			<span class="left">Speaker(s): </span>
+			<select id="speaker-select">
+				<option data-val='other'>Other</option>
+				<option data-val='cl'>Christian Lee</option>
+				<option data-val='el'>Erin Lee</option>
+				<option data-val='mac'>Marcus Corpening</option>
+				<option data-val='cal'>Caleb Lee</option>
+				<option data-val='py'>Paul Yoo</option>
+				<option data-val='jy'>Jamie Yoo</option>
+				<option data-val='jmb'>John-Michael Becker</option>
+				<option data-val='sjb'>Sky J Becker</option>
+				<option data-val='da'>David Ahn</option>
+			</select><br><br>
+			<span class="other-speaker"><span class="left">Other Speaker: </span><input type="text" id="other-speaker"><br><br></span>
+			<span class="left">Initials: </span><input type="text" id="speaker-initials"><br><br>
+			<span class="left">Event: </span>
+	        <select id="event-select">
+	            <option data-val='other'>Other</option>
+	            <option data-val='Sunday Hillside'>Hillside (Sunday)</option>
+	            <option data-val='Sunday Itaewon'>Itaewon (Sunday)</option>
+	            <option data-val='Sunday Seaside'>Seaside (Sunday)</option>
+	            <option data-val='Sunday Sydney'>Sydney (Sunday)</option>
+	            <option data-val='Fri Fire'>Friday Fire (Hillside)</option>
+	            <option data-val='Friday Fire Seaside'>Friday Fire (Seaside)</option>
+	            <option data-val='JPM'>JPM</option>
+	        </select><br><br>
+	        <span class="other-event"><span class="left">Other Event: </span><input type="text" id="other-event"><br><br></span>
+			<span class="left">Sermon Name: </span><input type="text" id="sermon-name"><br><br>
+			<span class="left">Sermon Duration: </span><input type="text" id="sermon-time"><br><br>
+			<span class="left">Podcast Time Stamp: </span><input type="text" id="time-stamp-pod"><br><br>
+			<span class="title"><i>Podcast Title</i></span><br><input class="long" type="text" id="podcast-name">
+			<button id="copy-podcast" data-clipboard-text="" title="Click to copy podcast name">Copy</button><br><br>
+			<span class="left">FB Time Stamp: </span><input type="text" id="time-stamp-fb"><br><br>
+			<span class="title"><i>Facebook Post</i></span><br><input class="long" type="text" id="fb-name">
+			<button id="copy-fb" data-clipboard-text="" title="Click to copy FB post">Copy</button><br><br>
+			<span class="left">Sermon Link: </span><input type="text" id="link_url"><button id="get-bitly">Bitly</button><br><br>
+			<span class="left bitly">Bitly URL: </span><span class="bitly" id="bitly-url" val=''></span>
+			<button class="bitly" id="copy-bitly" data-clipboard-text="" title="Click to copy bitly url">Copy</button><br><br>
+		</div>
+	    <p style="text-align:right;margin:0;">&#169; Brian Kim </p>
 	</div>
 
 </body>
@@ -312,6 +346,7 @@
 			get_short_url(long_url, login, api_key, function(short_url) {
 			    $("#bitly-url").text(short_url);
 			    $("#copy-bitly").attr("data-clipboard-text",short_url);
+			    $(".bitly").show();
 			});
 		});
 
