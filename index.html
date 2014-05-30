@@ -355,11 +355,15 @@
 			var long_url = $("#link_url").val();
 			// long_url = encodeURIComponent(long_url);
 			get_short_url(long_url, login, api_key, function(short_url) {
-			    $("#bitly-url").text(short_url);
-			    $("#copy-bitly").attr("data-clipboard-text",short_url);
-			    $(".bitly").show();
-			    $("#ajax").hide();
-			    $("#get-bitly").show();
+				if(short_url !== '') {
+				    $("#bitly-url").text(short_url);
+				    $("#copy-bitly").attr("data-clipboard-text",short_url);
+				    $(".bitly").show();
+				    $("#ajax").hide();
+				    $("#get-bitly").show();
+				} else {
+					alert("Invalid Link");
+				}
 			});
 		});
 
