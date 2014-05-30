@@ -360,14 +360,16 @@
 			var long_url = $("#link_url").val();
 			// long_url = encodeURIComponent(long_url);
 			get_short_url(long_url, login, api_key, function(short_url) {
-				if(short_url !== '') {
+				if(typeof short_url !== 'undefined') {
 				    $("#bitly-url").text(short_url);
 				    $("#copy-bitly").attr("data-clipboard-text",short_url);
 				    $(".bitly").show();
 				    $("#ajax").hide();
 				    $("#get-bitly").show();
 				} else {
-					alert("Invalid Link");
+					alert("Please use a valid URL");
+					$("#ajax").hide();
+				    $("#get-bitly").show();
 				}
 			});
 		});
