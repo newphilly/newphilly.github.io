@@ -42,8 +42,8 @@
 		margin-left: 10px;
 	}
 
-	#link_url {
-		width: 180px;
+	input, select {
+		width: 160px;
 	}
 
 	button {
@@ -56,7 +56,7 @@
 	<div id="container">
 		<img src="logo.png">
 		<h3>Podcast/FB Post Automator v0.1</h3>
-		<span id="date_time"></span><br><br>
+		Current Time: <span id="date_time"></span><br><br>
 		Speaker(s): 
 		<select id="speaker-select">
 			<option data-val='other'>Other</option>
@@ -87,10 +87,10 @@
 		Sermon Name: <input type="text" id="sermon-name"><br><br>
 		Sermon Duration: <input type="text" id="sermon-time"><br><br>
 		Podcast Time Stamp: <input type="text" id="time-stamp-pod"><br><br>
-		Podcast Title: <span id="podcast-name" val=''></span><br><br>
+		Podcast Title: <input type="text" id="podcast-name"><br><br>
 		<button id="copy-podcast" data-clipboard-text="" title="Click to copy podcast name">Copy Podcast Name</button><br><br>
 		FB Time Stamp: <input type="text" id="time-stamp-fb"><br><br>
-		Facebook Post: <span id="fb-name" val=''></span><br><br>
+		Facebook Post: <input type="text" id="fb-name"><br><br>
 		<button id="copy-fb" data-clipboard-text="" title="Click to copy FB post">Copy FB Post</button><br><br>
 		Sermon Link URL<br><input type="text" id="link_url"><button id="get-bitly">Get Bitly URL</button><br><br>
 		Bitly URL: <span id="bitly-url" val=''></span><br><br>
@@ -100,80 +100,57 @@
 
 </body>
 <script src="jquery.min.js"></script>
-<script src="ZeroClipboard.min.js"></script>
+<script src="ZeroClipboard.js"></script>
 <script>
-
-	//Scripts for Clipboard 
-	var client = new ZeroClipboard(document.getElementById("copy-podcast"), {
-		moviePath: "ZeroClipboard.swf"
-	});
-
-	client.on( "load", function(client) {
-	// alert( "movie is loaded" );
-
-		client.on( "complete", function(client, args) {
-	// `this` is the element that was clicked
-			// this.style.display = "none";
-			// alert("Copied text to clipboard: " + args.text );
+		//Scripts for Clipboard 
+		var client = new ZeroClipboard(document.getElementById("copy-podcast"), {
+			moviePath: "ZeroClipboard.swf"
 		});
-	});
 
-	var client_fb = new ZeroClipboard(document.getElementById("copy-fb"), {
-		moviePath: "ZeroClipboard.swf"
-	});
+		client.on( "load", function(client) {
+		alert( "movie is loaded" );
 
-	client_fb.on( "load", function(client) {
-	// alert( "movie is loaded" );
-
-		client_fb.on( "complete", function(client, args) {
-	// `this` is the element that was clicked
-			// this.style.display = "none";
-			// alert("Copied text to clipboard: " + args.text );
+			client.on( "complete", function(client, args) {
+		// `this` is the element that was clicked
+				// this.style.display = "none";
+				// alert("Copied text to clipboard: " + args.text );
+			});
 		});
-	});
 
-	var client_bitly = new ZeroClipboard(document.getElementById("copy-bitly"), {
-		moviePath: "ZeroClipboard.swf"
-	});
-
-	client_bitly.on( "load", function(client) {
-	// alert( "movie is loaded" );
-
-		client_bitly.on( "complete", function(client, args) {
-	// `this` is the element that was clicked
-			// this.style.display = "none";
-			// alert("Copied text to clipboard: " + args.text );
+		var client_fb = new ZeroClipboard(document.getElementById("copy-fb"), {
+			moviePath: "ZeroClipboard.swf"
 		});
-	});
 
+		client_fb.on( "load", function(client) {
+		alert( "movie is loaded" );
 
-	//Scripts for Real Clock
-	function date_time(id)
-	{
-	    date1 = new Date;
-	    year1 = date1.getFullYear();
-	    month1 = date1.getMonth();
-	    months1 = new Array('January', 'February', 'March', 'April', 'May', 'June', 'Jully', 'August', 'September', 'October', 'November', 'December');
-	    d1 = date1.getDate();
-	    day1 = date1.getDay();
-	    days1 = new Array('Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday');
-	    h1 = date1.getHours();
-	    h1 = (h1<10) ? "0" + h1 : h1;
-	    m1 = date1.getMinutes();
-	    m1 = (m1<10) ? "0" + m1 : m1;
-	    s1 = date1.getSeconds();
-	    s1 = (s1<10) ? "0" + s1 : s1;
-	    result1 = ''+days1[day1]+' '+months1[month1]+' '+d1+' '+year1+' '+h1+':'+m1+':'+s1;
-	    document.getElementById(id).innerHTML = result1;
-	    setTimeout('date_time("'+id+'");','1000');
-	    return true;
-	}
+			client_fb.on( "complete", function(client, args) {
+		// `this` is the element that was clicked
+				// this.style.display = "none";
+				// alert("Copied text to clipboard: " + args.text );
+			});
+		});
+
+		var client_bitly = new ZeroClipboard(document.getElementById("copy-bitly"), {
+			moviePath: "ZeroClipboard.swf"
+		});
+
+		client_bitly.on( "load", function(client) {
+		alert( "movie is loaded" );
+
+			client_bitly.on( "complete", function(client, args) {
+		// `this` is the element that was clicked
+				// this.style.display = "none";
+				// alert("Copied text to clipboard: " + args.text );
+			});
+		});
 
 	//Print current live time
 	// date_time('date_time');
 
 	//run after document is loaded
 	$(document).ready(function(){
+	
 
 		//formatting Current Time
 		function live_time(){
@@ -187,7 +164,7 @@
 			var ss = today.getSeconds();
 			var hh = today.getHours();
 			var min = today.getMinutes();
-			var days = ['sun','mon','tue','wed','thu','fri','sat'];
+			var days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
 			var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
 			dd = (dd<10) ? '0'+dd : dd;
 			mm = (mm<10) ? '0'+mm : mm;
@@ -201,11 +178,13 @@
 			var today_fb = month + '/' + day + '/' + yyyy; 
 
 			$("#date_time").text(live_time)
-			$("#time-stamp-pod").text(today_podcast);
-			$("#time-stamp-fb").text(today_fb);
+			$("#time-stamp-pod").val(today_podcast);
+			$("#time-stamp-fb").val(today_fb);
 		}
 
-		setTimeout(function(){
+		live_time();
+
+		setInterval(function(){
 			live_time();
 		}, 1000);
 
@@ -251,10 +230,10 @@
 	    function name_podcast(){
 	        var sermon_title = $("#sermon-name").val();
 	        var initials = $("#speaker-initials").val();
-	        var time_pod = $("#time-stamp-pod").text();
+	        var time_pod = $("#time-stamp-pod").val();
 	        var podcast = time_pod + " - " + sermon_title + " - " + initials + ".mp3";
 	        // alert(initials);
-	        $("#podcast-name").text(podcast);
+	        $("#podcast-name").val(podcast);
 	        $("#copy-podcast").attr("data-clipboard-text",podcast);
 	    }
 
@@ -270,11 +249,11 @@
 	        if(campus_event == "other") {
 	        	campus_event = $("#other-event").val();
 	        }
-	        var time_fb = $("#time-stamp-fb").text();
+	        var time_fb = $("#time-stamp-fb").val();
 	        //"Wisdom in Loving" by Christian Lee (Sunday Hillside, 5/25/2014, 1:28:55)
 	        var fb_name = '"' + sermon_title + '" by ' + speaker + " (" + campus_event + ", " + time_fb + ", " + length + ")";
 	        // alert(initials);
-	        $("#fb-name").text(fb_name);
+	        $("#fb-name").val(fb_name);
 	        $("#copy-fb").attr("data-clipboard-text",fb_name);
 	    }
 
