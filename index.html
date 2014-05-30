@@ -7,14 +7,9 @@
 
 	<meta name="description" content="New Philly Sermon Info, Names, Shortcuts Generator">
 	<meta name="author" content="beekay">
-	<link href='http://fonts.googleapis.com/css?family=News+Cycle' rel='stylesheet' type='text/css'>
+
 </head>
 <style>
-
-	* {
-		font-family: 'News Cycle', sans-serif;	
-	}
-
 	#container {
 		padding: 2.5% 2.5% 0;
 		margin: 50px auto;
@@ -42,12 +37,12 @@
 		margin-left: 10px;
 	}
 
-	input, select {
-		width: 160px;
+	#link_url {
+		width: 180px;
 	}
 
 	button {
-		padding: 10px;
+		padding-top: 10px;
 		cursor: pointer;
 	}
 </style>
@@ -56,7 +51,7 @@
 	<div id="container">
 		<img src="logo.png">
 		<h3>Podcast/FB Post Automator v0.1</h3>
-		Current Time: <span id="date_time"></span><br><br>
+		<span id="date-now"></span><br><br>
 		Speaker(s): 
 		<select id="speaker-select">
 			<option data-val='other'>Other</option>
@@ -86,108 +81,81 @@
         <span class="other-event">Other Event: &nbsp;&nbsp;<input type="text" id="other-event"><br><br></span>
 		Sermon Name: <input type="text" id="sermon-name"><br><br>
 		Sermon Duration: <input type="text" id="sermon-time"><br><br>
-		Podcast Time Stamp: <input type="text" id="time-stamp-pod"><br><br>
-		Podcast Title: <input type="text" id="podcast-name"><br><br>
+		Podcast Title: <span id="podcast-name" val=''></span><br><br>
 		<button id="copy-podcast" data-clipboard-text="" title="Click to copy podcast name">Copy Podcast Name</button><br><br>
-		FB Time Stamp: <input type="text" id="time-stamp-fb"><br><br>
-		Facebook Post: <input type="text" id="fb-name"><br><br>
+		Facebook Post: <span id="fb-name" val=''></span><br><br>
 		<button id="copy-fb" data-clipboard-text="" title="Click to copy FB post">Copy FB Post</button><br><br>
 		Sermon Link URL<br><input type="text" id="link_url"><button id="get-bitly">Get Bitly URL</button><br><br>
 		Bitly URL: <span id="bitly-url" val=''></span><br><br>
 		<button id="copy-bitly" data-clipboard-text="" title="Click to copy bitly url">Copy Bitly URL</button><br><br>
-	    <p style="text-align:right;margin-right: -4%;">&#169; Brian Kim </p>
+	    <p style="text-align:right;">&#169; Brian Kim </p>
 	</div>
 
 </body>
 <script src="jquery.min.js"></script>
-<script src="ZeroClipboard.js"></script>
+<script src="ZeroClipboard.min.js"></script>
 <script>
-		//Scripts for Clipboard 
-		var client = new ZeroClipboard(document.getElementById("copy-podcast"), {
-			moviePath: "ZeroClipboard.swf"
+	var client = new ZeroClipboard(document.getElementById("copy-podcast"), {
+		moviePath: "ZeroClipboard.swf"
+	});
+
+	client.on( "load", function(client) {
+	// alert( "movie is loaded" );
+
+		client.on( "complete", function(client, args) {
+	// `this` is the element that was clicked
+			// this.style.display = "none";
+			// alert("Copied text to clipboard: " + args.text );
 		});
+	});
 
-		client.on( "load", function(client) {
-		alert( "movie is loaded" );
+	var client_fb = new ZeroClipboard(document.getElementById("copy-fb"), {
+		moviePath: "ZeroClipboard.swf"
+	});
 
-			client.on( "complete", function(client, args) {
-		// `this` is the element that was clicked
-				// this.style.display = "none";
-				// alert("Copied text to clipboard: " + args.text );
-			});
+	client_fb.on( "load", function(client) {
+	// alert( "movie is loaded" );
+
+		client_fb.on( "complete", function(client, args) {
+	// `this` is the element that was clicked
+			// this.style.display = "none";
+			// alert("Copied text to clipboard: " + args.text );
 		});
+	});
 
-		var client_fb = new ZeroClipboard(document.getElementById("copy-fb"), {
-			moviePath: "ZeroClipboard.swf"
+	var client_bitly = new ZeroClipboard(document.getElementById("copy-bitly"), {
+		moviePath: "ZeroClipboard.swf"
+	});
+
+	client_bitly.on( "load", function(client) {
+	// alert( "movie is loaded" );
+
+		client_bitly.on( "complete", function(client, args) {
+	// `this` is the element that was clicked
+			// this.style.display = "none";
+			// alert("Copied text to clipboard: " + args.text );
 		});
-
-		client_fb.on( "load", function(client) {
-		alert( "movie is loaded" );
-
-			client_fb.on( "complete", function(client, args) {
-		// `this` is the element that was clicked
-				// this.style.display = "none";
-				// alert("Copied text to clipboard: " + args.text );
-			});
-		});
-
-		var client_bitly = new ZeroClipboard(document.getElementById("copy-bitly"), {
-			moviePath: "ZeroClipboard.swf"
-		});
-
-		client_bitly.on( "load", function(client) {
-		alert( "movie is loaded" );
-
-			client_bitly.on( "complete", function(client, args) {
-		// `this` is the element that was clicked
-				// this.style.display = "none";
-				// alert("Copied text to clipboard: " + args.text );
-			});
-		});
-
-	//Print current live time
-	// date_time('date_time');
+	});
 
 	//run after document is loaded
 	$(document).ready(function(){
-	
 
 		//formatting Current Time
-		function live_time(){
-			var today = new Date();
-			var day = today.getDate();
-			var dd = today.getDay();
-			var month = today.getMonth()+1;
-			var mm = today.getMonth()+1; //January is 0!
-			var yyyy = today.getFullYear();
-			var d = today.getDay();
-			var ss = today.getSeconds();
-			var hh = today.getHours();
-			var min = today.getMinutes();
-			var days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
-			var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-			dd = (dd<10) ? '0'+dd : dd;
-			mm = (mm<10) ? '0'+mm : mm;
-			ss = (ss<10) ? '0'+ss : ss;
-			hh = (hh<10) ? '0'+hh : hh;
-			min = (min<10) ? '0'+min : min;
+		var today = new Date();
+		var day = today.getDate();
+		var dd = today.getDate();
+		var month = today.getMonth()+1;
+		var mm = today.getMonth()+1; //January is 0!
+		var yyyy = today.getFullYear();
+		var d = today.getDay();
+		var days = ['sun','mon','tue','wed','thu','fri','sat'];
+		dd = (dd<10) ? '0'+dd : dd;
+		mm = (mm<10) ? '0'+mm : mm;
 
-			var live_time = days[d] + ' ' + months[month] + ' ' + dd + ' ' + yyyy + ' ' + hh + ':' + min + ':' + ss;
-			//setting formats for podcast and fb
-			var today_podcast = yyyy+'.'+mm+'.'+dd+'.'+days[d];
-			var today_fb = month + '/' + day + '/' + yyyy; 
-
-			$("#date_time").text(live_time)
-			$("#time-stamp-pod").val(today_podcast);
-			$("#time-stamp-fb").val(today_fb);
-		}
-
-		live_time();
-
-		setInterval(function(){
-			live_time();
-		}, 1000);
-
+		//setting formats for podcast and fb
+		var today_podcast = yyyy+'.'+mm+'.'+dd+'.'+days[d];
+		var today_fb = month + '/' + day + '/' + yyyy; 
+		
 		//determine if letter is uppercase
 		function isUpperCase(char) {
 			return !!/[A-Z]/.exec(char[0]);
@@ -230,10 +198,9 @@
 	    function name_podcast(){
 	        var sermon_title = $("#sermon-name").val();
 	        var initials = $("#speaker-initials").val();
-	        var time_pod = $("#time-stamp-pod").val();
-	        var podcast = time_pod + " - " + sermon_title + " - " + initials + ".mp3";
+	        var podcast = today_podcast + " - " + sermon_title + " - " + initials + ".mp3";
 	        // alert(initials);
-	        $("#podcast-name").val(podcast);
+	        $("#podcast-name").text(podcast);
 	        $("#copy-podcast").attr("data-clipboard-text",podcast);
 	    }
 
@@ -249,16 +216,15 @@
 	        if(campus_event == "other") {
 	        	campus_event = $("#other-event").val();
 	        }
-	        var time_fb = $("#time-stamp-fb").val();
 	        //"Wisdom in Loving" by Christian Lee (Sunday Hillside, 5/25/2014, 1:28:55)
-	        var fb_name = '"' + sermon_title + '" by ' + speaker + " (" + campus_event + ", " + time_fb + ", " + length + ")";
+	        var fb_name = '"' + sermon_title + '" by ' + speaker + " (" + campus_event + ", " + today_fb + ", " + length + ")";
 	        // alert(initials);
-	        $("#fb-name").val(fb_name);
+	        $("#fb-name").text(fb_name);
 	        $("#copy-fb").attr("data-clipboard-text",fb_name);
 	    }
 
-		//print static time
-		// $("#date-now").text(Date());
+		//print current time
+		$("#date-now").text(Date());
 
 		//set initials based on speaker
 		$("#speaker-select").change(function(){
@@ -275,7 +241,7 @@
 		});
 
 		//update podcast and fb dynamically as content is entered
-		$("#speaker-initials, #other-event, #sermon-name, #sermon-time, #time-stamp-pod, #time-stamp-fb").on('input',function(){
+		$("#speaker-initials, #other-event, #sermon-name, #sermon-time").on('input',function(){
 			name_podcast();
 			name_fb()
 		});
