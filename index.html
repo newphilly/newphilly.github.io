@@ -153,7 +153,7 @@
 	
 
 		//formatting Current Time
-		function live_time(){
+		function live_time(update){
 			var today = new Date();
 			var day = today.getDate();
 			var dd = today.getDay();
@@ -178,14 +178,16 @@
 			var today_fb = month + '/' + day + '/' + yyyy; 
 
 			$("#date_time").text(live_time)
-			$("#time-stamp-pod").val(today_podcast);
-			$("#time-stamp-fb").val(today_fb);
+			if(update == 0) {
+				$("#time-stamp-pod").val(today_podcast);
+				$("#time-stamp-fb").val(today_fb);
+			}
 		}
 
-		live_time();
+		live_time(0);
 
 		setInterval(function(){
-			live_time();
+			live_time(1s);
 		}, 1000);
 
 		//determine if letter is uppercase
