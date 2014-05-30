@@ -94,7 +94,7 @@
 		Sermon Link URL<br><input type="text" id="link_url"><button id="get-bitly">Get Bitly URL</button><br><br>
 		Bitly URL: <span id="bitly-url" val=''></span><br><br>
 		<button id="copy-bitly" data-clipboard-text="" title="Click to copy bitly url">Copy Bitly URL</button><br><br>
-	    <p style="text-align:right;">&#169; Brian Kim </p>
+	    <p style="text-align:right;margin-right: -4%;">&#169; Brian Kim </p>
 	</div>
 
 </body>
@@ -172,7 +172,7 @@
 	            s1 = "0"+s1;
 	    }
 	    result1 = ''+days1[day1]+' '+months1[month1]+' '+d1+' '+year1+' '+h1+':'+m1+':'+s1;
-	    document.getElementById(id).innerHTML = result;
+	    document.getElementById(id).innerHTML = result1;
 	    setTimeout('date_time("'+id+'");','1000');
 	    return true;
 	}
