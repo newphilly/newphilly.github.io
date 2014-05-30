@@ -38,26 +38,48 @@
 		font-weight: bold;
 	}
 
-	#get-bitly {
-		margin-left: 10px;
+	input {
+		width: 160px;
+		display: block;
+		float: left;
 	}
 
-	input, select {
+	select {
 		width: 160px;
+		display: block;
+		float: left;
+		margin-top:4px;	
 	}
 
 	button {
-		padding: 10px;
 		cursor: pointer;
+		display: block;
+		float: left;
+		height: 26px;
+		margin-left: 5px;
+		margin-top: 0;
+		padding: 10px;
+		width: 50px;
 	}
+
+
+	.left {
+		display:block;
+		width: 150px;
+		text-align: right;
+		float:left;
+		margin-right:10px;
+		font-weight:bold;
+	}
+
 </style>
 
 <body>
 	<div id="container">
 		<img src="logo.png">
 		<h3>Podcast/FB Post Automator v0.1</h3>
-		Current Time: <span id="date_time"></span><br><br>
-		Speaker(s): 
+		<span class="left">Current Time: </span><span id="date_time"></span><br><br>
+		<span class="left">Speaker(s): </span>
 		<select id="speaker-select">
 			<option data-val='other'>Other</option>
 			<option data-val='cl'>Christian Lee</option>
@@ -70,9 +92,9 @@
 			<option data-val='sjb'>Sky J Becker</option>
 			<option data-val='da'>David Ahn</option>
 		</select><br><br>
-		<span class="other-speaker">Other Speaker: &nbsp;&nbsp;<input type="text" id="other-speaker"><br><br></span>
-		Initials: <input type="text" id="speaker-initials"><br><br>
-		Event:
+		<span class="other-speaker"><span class="left">Other Speaker: </span><input type="text" id="other-speaker"><br><br></span>
+		<span class="left">Initials: </span><input type="text" id="speaker-initials"><br><br>
+		<span class="left">Event: </span>
         <select id="event-select">
             <option data-val='other'>Other</option>
             <option data-val='Sunday Hillside'>Hillside (Sunday)</option>
@@ -83,18 +105,18 @@
             <option data-val='Friday Fire Seaside'>Friday Fire (Seaside)</option>
             <option data-val='JPM'>JPM</option>
         </select><br><br>
-        <span class="other-event">Other Event: &nbsp;&nbsp;<input type="text" id="other-event"><br><br></span>
-		Sermon Name: <input type="text" id="sermon-name"><br><br>
-		Sermon Duration: <input type="text" id="sermon-time"><br><br>
-		Podcast Time Stamp: <input type="text" id="time-stamp-pod"><br><br>
-		Podcast Title: <input type="text" id="podcast-name"><br><br>
-		<button id="copy-podcast" data-clipboard-text="" title="Click to copy podcast name">Copy Podcast Name</button><br><br>
-		FB Time Stamp: <input type="text" id="time-stamp-fb"><br><br>
-		Facebook Post: <input type="text" id="fb-name"><br><br>
-		<button id="copy-fb" data-clipboard-text="" title="Click to copy FB post">Copy FB Post</button><br><br>
-		Sermon Link URL<br><input type="text" id="link_url"><button id="get-bitly">Get Bitly URL</button><br><br>
-		Bitly URL: <span id="bitly-url" val=''></span><br><br>
-		<button id="copy-bitly" data-clipboard-text="" title="Click to copy bitly url">Copy Bitly URL</button><br><br>
+        <span class="other-event"><span class="left">Other Event: </span><input type="text" id="other-event"><br><br></span>
+		<span class="left">Sermon Name: </span><input type="text" id="sermon-name"><br><br>
+		<span class="left">Sermon Duration: </span><input type="text" id="sermon-time"><br><br>
+		<span class="left">Podcast Time Stamp: </span><input type="text" id="time-stamp-pod"><br><br>
+		<span class="left">Podcast Title: </span><input type="text" id="podcast-name">
+		<button id="copy-podcast" data-clipboard-text="" title="Click to copy podcast name">Copy</button><br><br>
+		<span class="left">FB Time Stamp: </span><input type="text" id="time-stamp-fb"><br><br>
+		<span class="left">Facebook Post: </span><input type="text" id="fb-name">
+		<button id="copy-fb" data-clipboard-text="" title="Click to copy FB post">Copy</button><br><br>
+		<span class="left">Sermon URL: </span><input type="text" id="link_url"><button id="get-bitly">Bitly</button><br><br>
+		Bitly URL: <span id="bitly-url" val=''></span>
+		<button id="copy-bitly" data-clipboard-text="" title="Click to copy bitly url">Copy</button><br><br>
 	    <p style="text-align:right;margin-right: -4%;">&#169; Brian Kim </p>
 	</div>
 
@@ -124,7 +146,7 @@
 	declare_clip("copy-podcast");
 	declare_clip("copy-fb");
 	declare_clip("copy-bitly");
-	
+
 	//run after document is loaded
 	$(document).ready(function(){
 
