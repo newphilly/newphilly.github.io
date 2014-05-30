@@ -39,12 +39,20 @@
 		width: 390px;
 	}
 
-	img {
+	#logo {
 		display: block;
 		width: 250px;
 		margin: 0 auto;
 		height: auto;
 		padding-top:50px;
+	}
+
+	#ajax {
+		display: none;
+		float: left;
+		height: 25px;
+		margin: 2px 0 0 7px;
+		width: 55px;
 	}
 
 	h3{
@@ -109,7 +117,7 @@
 
 <body>
 	<div id="container">
-		<img src="logo.png">
+		<img id="logo" src="logo.png">
 		<h3>Podcast/FB Post Automator v0.2</h3>
 		<div id="info-container">
 			<span class="left">Current Time: </span><span id="date_time"></span><br><br>
@@ -148,8 +156,8 @@
 			<span class="left">FB Time Stamp: </span><input type="text" id="time-stamp-fb"><br><br>
 			<span class="title"><i>Facebook Post</i></span><br><input class="long" type="text" id="fb-name">
 			<button id="copy-fb" data-clipboard-text="" title="Click to copy FB post">Copy</button><br><br>
-			<span class="left">Sermon Link: </span><input type="text" id="link_url"><button id="get-bitly">Bitly</button><br><br>
-			<span class="left bitly">Bitly URL: </span><span class="bitly" id="bitly-url" val=''></span>
+			<span class="left">Sermon Link: </span><input type="text" id="link_url"><img id="ajax" src="ajax.gif"><button id="get-bitly">Bitly</button><br><br>
+			<span class="left bitly">Bitly Link: </span><span class="bitly" id="bitly-url" val=''></span>
 			<button class="bitly" id="copy-bitly" data-clipboard-text="" title="Click to copy bitly url">Copy</button><br><br>
 		</div>
 	    <p style="text-align:right;margin:0;">&#169; Brian Kim </p>
@@ -340,6 +348,8 @@
 
 		//get bitly on click
 		$("#get-bitly").click(function(){
+			$("#get-bitly").hide();
+			$("#ajax").show();
 			var login = "briamkin";
 			var api_key = "5c1fdd3a0b2d57d7b4c2e91e63507d637ab05d61";
 			var long_url = $("#link_url").val();
@@ -348,6 +358,8 @@
 			    $("#bitly-url").text(short_url);
 			    $("#copy-bitly").attr("data-clipboard-text",short_url);
 			    $(".bitly").show();
+			    $("#ajax").hide();
+			    $("#get-bitly").show();
 			});
 		});
 
