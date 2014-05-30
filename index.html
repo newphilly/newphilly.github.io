@@ -47,7 +47,7 @@
 	}
 
 	button {
-		padding-top: 10px;
+		padding: 10px;
 		cursor: pointer;
 	}
 </style>
@@ -56,7 +56,6 @@
 	<div id="container">
 		<img src="logo.png">
 		<h3>Podcast/FB Post Automator v0.1</h3>
-		<span id="date-now"></span><br><br>
 		<span id="date_time"></span><br><br>
 		Speaker(s): 
 		<select id="speaker-select">
@@ -177,7 +176,9 @@
 	    return true;
 	}
 
+	//Print current live time
 	date_time('date_time');
+	
 	//run after document is loaded
 	$(document).ready(function(){
 
@@ -264,8 +265,8 @@
 	        $("#copy-fb").attr("data-clipboard-text",fb_name);
 	    }
 
-		//print current time
-		$("#date-now").text(Date());
+		//print static time
+		// $("#date-now").text(Date());
 
 		//set initials based on speaker
 		$("#speaker-select").change(function(){
