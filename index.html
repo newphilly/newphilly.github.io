@@ -202,10 +202,10 @@
 		//formatting Current Time
 		function live_time(update){
 			var today = new Date();
-			var day = today.getDate();
-			var dd = today.getDay();
+			var day = today.getDay();
+			// var dd = today.getDay();
 			var month = today.getMonth()+1;
-			var mm = today.getMonth()+1; //January is 0!
+			// var mm = today.getMonth()+1; //January is 0!
 			var yyyy = today.getFullYear();
 			var d = today.getDay();
 			var ss = today.getSeconds();
@@ -213,8 +213,8 @@
 			var min = today.getMinutes();
 			var days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
 			var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-			dd = (dd<10) ? '0'+dd : dd;
-			mm = (mm<10) ? '0'+mm : mm;
+			dd = (day<10) ? '0'+day : day;
+			mm = (month<10) ? '0'+month : month;
 			ss = (ss<10) ? '0'+ss : ss;
 			hh = (hh<10) ? '0'+hh : hh;
 			min = (min<10) ? '0'+min : min;
