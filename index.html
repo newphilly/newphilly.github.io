@@ -142,14 +142,14 @@
 			<span class="left">Initials: </span><input type="text" id="speaker-initials"><br><br>
 			<span class="left">Event: </span>
 	        <select id="event-select">
-	            <option data-val='other'>Other</option>
-	            <option data-val='Sunday Hillside'>Hillside (Sunday)</option>
-	            <option data-val='Sunday Itaewon'>Itaewon (Sunday)</option>
-	            <option data-val='Sunday Seaside'>Seaside (Sunday)</option>
-	            <option data-val='Sunday Sydney'>Sydney (Sunday)</option>
-	            <option data-val='Fri Fire'>Friday Fire (Hillside)</option>
-	            <option data-val='Friday Fire Seaside'>Friday Fire (Seaside)</option>
-	            <option data-val='JPM'>JPM</option>
+	            <option data-val='other' data-url='other'>Other</option>
+	            <option data-val='Sunday Hillside' data-url='Hillside'>Hillside (Sunday)</option>
+	            <option data-val='Sunday Itaewon' data-url='Itaewon'>Itaewon (Sunday)</option>
+	            <option data-val='Sunday Seaside' data-url='Seaside'>Seaside (Sunday)</option>
+	            <option data-val='Sunday Sydney' data-url='Sydney'>Sydney (Sunday)</option>
+	            <option data-val='Fri Fire' data-url='Hillside'>Friday Fire (Hillside)</option>
+	            <option data-val='Friday Fire Seaside' data-url='Seaside'>Friday Fire (Seaside)</option>
+	            <option data-val='JPM' data-url='Hillside'>JPM</option>
 	        </select><br><br>
 	        <span class="other-event"><span class="left">Other Event: </span><input type="text" id="other-event"><br><br></span>
 			<span class="left">Sermon Name: </span><input type="text" id="sermon-name"><br><br>
@@ -160,7 +160,7 @@
 			<span class="left">FB Time Stamp: </span><input type="text" id="time-stamp-fb"><br><br>
 			<span class="title"><i>Facebook Post</i></span><br><input class="long" type="text" id="fb-name">
 			<div class="btn" id="copy-fb" data-clipboard-text="" title="Click to copy FB post">Copy</div><br><br>
-			<span class="left">Sermon Link: </span><input type="text" id="link_url"><img id="ajax" src="ajax.gif"><div class="btn" id="get-bitly">Bitly</div><br><br>
+			<span><i>Sermon Link</i></span><br><input class="long" type="text" id="link_url"><img id="ajax" src="ajax.gif"><div class="btn" id="get-bitly">Bitly</div><br><br>
 			<span class="left bitly">Bitly Link: </span><span class="bitly" id="bitly-url" val=''></span>
 			<div class="btn bitly" id="copy-bitly" data-clipboard-text="" title="Click to copy bitly url">Copy</div><br><br>
 		</div>
@@ -201,18 +201,18 @@
 		function live_time(update){
 			var today = new Date();
 			var day = today.getDate();
-			var dd = today.getDay();
+			// var dd = today.getDay();
 			var month = today.getMonth()+1;
-			var mm = today.getMonth()+1; //January is 0!
+			// var mm = today.getMonth()+1; //January is 0!
 			var yyyy = today.getFullYear();
 			var d = today.getDay();
 			var ss = today.getSeconds();
 			var hh = today.getHours();
 			var min = today.getMinutes();
-			var days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
-			var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-			dd = (dd<10) ? '0'+dd : dd;
-			mm = (mm<10) ? '0'+mm : mm;
+			var days = ['sun','mon','tue','wed','thu','fri','sat'];
+			var months = ['Error','Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+			dd = (day<10) ? '0'+day : day;
+			mm = (month<10) ? '0'+month : month;
 			ss = (ss<10) ? '0'+ss : ss;
 			hh = (hh<10) ? '0'+hh : hh;
 			min = (min<10) ? '0'+min : min;
@@ -277,20 +277,27 @@
 
 		//name podcast based on parameters
 	    function name_podcast(){
+	    	var today = new Date();
+	    	var yyyy = today.getFullYear();
 	        var sermon_title = $("#sermon-name").val();
 	        var initials = $("#speaker-initials").val();
 	        var time_pod = $("#time-stamp-pod").val();
 	        var podcast = time_pod + " - " + sermon_title + " - " + initials + ".mp3";
-	        // alert(initials);
+	        var campus_event = $("#event-select option:selected").attr("data-url");
+	        if(campus_event == 'other') {
+	        	campus_event = 'Hillside';
+	        }
+	        var sermon_link = "http://www.newphiladelphiachurch.com/podcast/" + yyyy + "/" + campus_event + "/" +podcast;
 	        $("#podcast-name").val(podcast);
 	        $("#copy-podcast").attr("data-clipboard-text",podcast);
+	        $("#link_url").val(sermon_link);
 	    }
 
 	    //name fb post based on parameters
 	    function name_fb(){
 	        var sermon_title = $("#sermon-name").val();
 	        var speaker = $("#speaker-select option:selected").val();
-	        if(speaker == "other") {
+	        if(speaker == "Other") {
 	        	speaker = $("#other-speaker").val();
 	        }
 	        var length = $("#sermon-time").val();
