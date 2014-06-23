@@ -51,6 +51,7 @@
 		display: none;
 		float: left;
 		height: 25px;
+		height: 20px;
 		margin: 2px 0 0 7px;
 		width: 55px;
 	}
@@ -143,6 +144,7 @@
 			<span class="left">Initials: </span><input type="text" id="speaker-initials"><br><br>
 			<span class="left">Event: </span>
 	        <select id="event-select">
+<<<<<<< HEAD
 	            <option data-val='other' data-url='other'>Other</option>
 	            <option data-val='Sunday Hillside' data-url='Hillside'>Hillside (Sunday)</option>
 	            <option data-val='Sunday Itaewon' data-url='Itaewon'>Itaewon (Sunday)</option>
@@ -151,6 +153,20 @@
 	            <option data-val='Fri Fire' data-url='Hillside'>Friday Fire (Hillside)</option>
 	            <option data-val='Friday Fire Seaside' data-url='Seaside'>Friday Fire (Seaside)</option>
 	            <option data-val='JPM' data-url='Hillside'>JPM</option>
+=======
+	            <option data-val='other'>Other</option>
+	            <option data-val='Sunday Hillside'>Hillside (Sunday)</option>
+	            <option data-val='Sunday Itaewon'>Itaewon (Sunday)</option>
+	            <option data-val='Sunday Seaside'>Seaside (Sunday)</option>
+	            <option data-val='Sunday Sydney'>Sydney (Sunday)</option>
+	            <option data-val='Fri Fire'>Friday Fire (Hillside)</option>
+	            <option data-val='Friday Fire Seaside'>Friday Fire (Seaside)</option>
+	            <option data-val='JPM'>Joint Prayer Meeting</option>
+	            <option data-val='Church-Wide Retreat'>Church-Wide Retreat</option>
+<<<<<<< HEAD
+>>>>>>> FETCH_HEAD
+=======
+>>>>>>> FETCH_HEAD
 	        </select><br><br>
 	        <span class="other-event"><span class="left">Other Event: </span><input type="text" id="other-event"><br><br></span>
 			<span class="left">Sermon Name: </span><input type="text" id="sermon-name"><br><br>
@@ -158,12 +174,26 @@
 			<span class="left">Podcast Date: </span><input type="text" id="time-stamp-pod"><br><br>
 			<span class="title"><i>Podcast Title</i></span><br><input class="long" type="text" id="podcast-name">
 			<div class="btn" id="copy-podcast" data-clipboard-text="" title="Click to copy podcast name">Copy</div><br><br>
+			<div class="btn" id="copy-podcast" data-clipboard-text="" title="Click to copy podcast name to clipboard">Copy</div><br><br>
 			<span class="left">FB Time Stamp: </span><input type="text" id="time-stamp-fb"><br><br>
 			<span class="title"><i>Facebook Post</i></span><br><input class="long" type="text" id="fb-name">
+<<<<<<< HEAD
+<<<<<<< HEAD
 			<div class="btn" id="copy-fb" data-clipboard-text="" title="Click to copy FB post">Copy</div><br><br>
 			<span><i>Sermon Link</i></span><br><input class="long" type="text" id="link_url"><img id="ajax" src="ajax.gif"><div class="btn" id="get-bitly">Bitly</div><br><br>
+=======
+			<div class="btn" id="copy-fb" data-clipboard-text="" title="Click to copy FB post to clipboard">Copy</div><br><br>
+			<span class="left">Sermon Link: </span><input type="text" id="link_url"><img id="ajax" src="ajax.gif">
+			<div class="btn" id="get-bitly" title="Click to shorten link">Bitly</div><br><br>
+>>>>>>> FETCH_HEAD
+=======
+			<div class="btn" id="copy-fb" data-clipboard-text="" title="Click to copy FB post to clipboard">Copy</div><br><br>
+			<span class="left">Sermon Link: </span><input type="text" id="link_url"><img id="ajax" src="ajax.gif">
+			<div class="btn" id="get-bitly" title="Click to shorten link">Bitly</div><br><br>
+>>>>>>> FETCH_HEAD
 			<span class="left bitly">Bitly Link: </span><span class="bitly" id="bitly-url" val=''></span>
 			<div class="btn bitly" id="copy-bitly" data-clipboard-text="" title="Click to copy bitly url">Copy</div><br><br>
+			<div class="btn bitly" id="copy-bitly" data-clipboard-text="" title="Click to copy bitly url to clipboard">Copy</div><br><br>
 		</div>
 	    <p style="text-align:right;margin:0;">&#169; Brian Kim </p>
 	</div>
@@ -210,7 +240,14 @@
 			var ss = today.getSeconds();
 			var hh = today.getHours();
 			var min = today.getMinutes();
+<<<<<<< HEAD
 			var days = ['sun','mon','tue','wed','thu','fri','sat'];
+=======
+			var days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+<<<<<<< HEAD
+>>>>>>> FETCH_HEAD
+=======
+>>>>>>> FETCH_HEAD
 			var months = ['Error','Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
 			dd = (day<10) ? '0'+day : day;
 			mm = (month<10) ? '0'+month : month;
